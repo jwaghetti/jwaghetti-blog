@@ -1,0 +1,60 @@
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This file is part of jwaghetti blog's source.
+%
+% Copyright © 2014 Jean Waghetti
+%
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the COPYING file for more details.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%!target: html
+%!encoding: utf-8
+%!options : --css-sugar --fix-path
+
+%!preproc: '%%date(?!day)(?!hour)'	'%%date(%Y-%m-%d %H:%M:%S)'
+%!preproc: '%%dateday'				'%%date(%Y-%m-%d)'
+%!preproc: '%%datehour'				'%%date(%H:%M:%S)'
+%!preproc: '%%mtime'				'%%mtime(%Y-%m-%d %H:%M:%S)'
+
+%!postproc: 'bloggermore' '<!--more-->'
+%!postproc: 'youtubevideo\((.*)\)' '<iframe width="420" height="315" src="\1" frameborder="0" allowfullscreen></iframe>'
+
+%!postproc(html): '(?i)<a(.*)>(.*) extlinkf( *)</a>'	'<a \1 target="_blank">\2</a>'
+
+% url library
+%!preproc: 'url_blogger'	'http://www.blogger.com'
+%!preproc: 'url_git'	'http://git-scm.com'
+%!preproc: 'url_txt2tags'	'http://txt2tags.org'
+%!preproc: 'url_vim'	'http://www.vim.org'
+%!preproc: 'url_wtfpl'	'http://www.wtfpl.net'
+
+% this will generate links with nofollow attribute and/or
+% that open in a new tab. Just put extlinkonnf or extlinkon
+% after the name of the link (must have a space before and after).
+% extlinkonnf => open new and nofollow
+% extlinkon => open new
+%!postproc(html): '(?i)<a(.*)>(.*) extlink( *)</a>'	'<a \1 rel="nofollow" target="_blank">\2</a>'
+%!postproc(html): '(?i)<a(.*)>(.*) extlinkf( *)</a>'	'<a \1 target="_blank">\2</a>'
+%!postproc(html): '{{(.*)}}' '<\1>'
+
+%!postproc(html): '{{quote'	'<blockquote>'
+%!postproc(html): 'quote}}'	'</blockquote>'
+
+%!preproc(html): '"""\n{{code'	'{{code'
+%!preproc(html): 'code}}\n"""'	'code}}'
+
+%!postproc(html): '{{code' '<div class="post-body-code"><pre>'
+%!postproc(html): 'code}}' '</pre></div>'
+
+% internal blog urls
+%!preproc: 'url_blog'	'http://jwaghetti.blogspot.com'
+
+% eof
+

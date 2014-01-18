@@ -1,0 +1,62 @@
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This file is part of jwaghetti blog's source.
+%
+% Copyright © 2014 Jean Waghetti
+%
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the COPYING file for more details.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%!includeconf: ../config/config.t2t
+
+This blog is a way of sharing knowledge. May not be anything interesting
+or new. It is only a way to concentrate 'how to do's of things I did,
+for future reference.
+
+= License =
+
+The content of this blog is, otherwise noted, is licensed under the
+[Do What The Fuck You Want To Public License (WTFPL) version 2 extlink url_wtfpl]
+
+This means you can do what the fuck you want with the content.
+
+Use the information of this blog at your own risk. The author,
+or any contributor, shall not be liable for any mistake, misuse,
+misinterpretation or catastrophic consequence.
+
+For all the content, otherwise noted:
+
+Copyright © 2014 Jean Waghetti.
+
+= Tools I Use For Blogging =
+
+Some tools help me to put this blog up.
+
+The first is [Blogger extlink url_blogger].
+
+It hosts the blog, it is where I manage the posts, blog model etc.
+
+A tool that I always use is [Vim extlink url_vim]:
+the best text editor I have ever used. Besides Blogger having its
+own text editor, it is not sufficient for me. The reasons are three:
+
+- I don't like WYSIWYG
+(and I don't like writing HTML directly, it is boring);
+- it does not have version control and
+- I need to be connected on internet to edit.
+-
+
+Vim solves only the last reason. For the other two, I use
+[txt2tags extlink url_txt2tags] (a simple markup language that,
+among other targets, generates HTML) and [Git extlink url_git]
+(as the version control system).
+
+%eof
+

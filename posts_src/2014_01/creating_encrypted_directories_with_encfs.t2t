@@ -1,0 +1,109 @@
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This file is part of jwaghetti blog's source.
+%
+% Copyright © 2014 Jean Waghetti
+%
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the COPYING file for more details.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%!includeconf: ../../config/config.t2t
+
+%!preproc: 'url_encfs' 'http://www.arg0.net/encfs'
+%!preproc: 'url_arch_encfs' 'https://wiki.archlinux.org/index.php/EncFS'
+%!preproc: 'url_fuse' 'http://fuse.sourceforge.net/'
+%!preproc: 'url_ecryptfs' 'http://ecryptfs.org/'
+%!preproc: 'url_truecrypt' 'www.truecrypt.org/'
+
+%tags: encryption, encfs, linux
+
+EncFS (Encrypted Filesystem) is a tool for encrypted filesystems in user space.
+It does not require any special permissions, since it uses [FUSE extlink url_fuse].
+
+Considering I will use encrypted folders mainly on things that need frequent backup,
+the advantages are:
+
+- per file encryption: will help on incremental backups;
+
+- encrypted folder can grow: a great advantage against a loopback filesystem (like
+[TrueCrypt extlink url_truecrypt], where you need to allocate resources before
+using them;
+
+- do not need root permissions: on every host there is FUSE support, I can use
+EncFS and
+
+- the configuration is straightforward.
+
+-
+
+I have used [eCryptfs extlink url_ecryptfs] before, but it does require
+configuring `fstab` or having root privileges for mounting the encrypted folders.
+The configuration is much more complicated.
+
+== Configuration ==
+
+First of all, make sure you have FUSE and EncFS installed on your system.
+
+You will need a directory for the encrypted data to be stored and another
+directory to mount the encrypted directory. For the example, let's call
+the directories `encrypted` and `decrypted`, respectively. Both on the
+home directory.
+
+"""
+{{code
+$ encfs ~/encrypted ~/decrypted
+code}}
+"""
+
+Notice that full paths are necessary. You will be prompted if you want
+the preconfigured options or to configure it yourself. I choose the
+defaults. At the end, you will be prompted for a password and confirmation.
+
+To mount the encrypted folder again, the command is the same:
+
+"""
+{{code
+$ encfs /full/path/to/encrypted_folder /full/path/to/decrypted_folder
+code}}
+"""
+
+And to umount it:
+
+"""
+{{code
+$ fusermount -u /full/path/to/decrypted_folder
+code}}
+"""
+
+=== External Links ===
+
+- [EncFS official site extlink url_encfs]
+
+- [ArchLinux wiki for EncFS url_arch_encfs]: contains some configuration
+for GUI user interaction.
+
+-
+
+=== Revision History ===
+
+**Post built on**: %%date
+{{br}}
+**Last modified on**: %%mtime
+{{br}}
+**First published on**: 2014-01-09 
+
+|| Revision  |     Date     |                Description                        |
+|     0.01   |  2014-01-09  |  Initial revision. Not verified.                  |
+|     1.00   |  2014-01-09  |  Minor modifications and corrections. Published.  |
+|     1.01   |  2014-01-15  |  Adding new "syntax" for code examples.           |
+|     1.02   |  2014-01-15  |  A link was not set to external.                  |
+
+%eof
+

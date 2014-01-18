@@ -1,0 +1,91 @@
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This file is part of jwaghetti blog's source.
+%
+% Copyright © 2014 Jean Waghetti
+%
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the COPYING file for more details.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%!includeconf: ../../config/config.t2t
+
+%!preproc: 'url_slackware_config_help' 'http://www.slackware.com/config/init.php'
+%!preproc: 'url_wikipedia_runlevel' 'http://en.wikipedia.org/wiki/Runlevel#Slackware_Linux'
+
+%tags: linux, slackware, startup, runlevel
+
+The default runlevel for Slackware is 3: that means it will run
+with multiuser mode, on a standard text-based login.
+
+But what is a runlevel? It defines the state of the machine after
+the boot. And, usually, for operating systems that implement
+System V initialization, runlevels are:
+
+- single user mode;
+- multiuser mode without network services started;
+- multiuser mode with network services started;
+- system shutdown and
+- system reboot.
+
+On Slackware, there are 7 runlevels:
+
+||  runlevel  |                  Description                         |
+|      0      |                     Halt.                            |
+|      1      |                Single user mode.                     |
+|      2      |          Unused (same as runlevel 3)                 |
+|      3      |   Multiuser mode without display manager (DEFAULT).  |
+|      4      |         Multiuser mode with display manager.         |
+|      5      |          Unused (same as runlevel 3).                |
+|      6      |                    Reboot.                           |
+
+To modify the default runlevel of Slackware, in the file
+``/etc/inittab``, look for a line like this:
+
+"""
+{{code
+# Default runlevel. (Do not set to 0 or 6)
+id:3:initdefault:
+code}}
+"""
+
+As it was expected (on Slackware), the default runlevel is 3
+(multiuser mode). Change it to runlevel 4 for GUI login
+when the system is started:
+
+"""
+{{code
+# Default runlevel. (Do not set to 0 or 6)
+id:4:initdefault:
+code}}
+"""
+
+Save the file and that is it. Reboot your system and a
+graphical login prompt will be there (if you installed
+the packages for one, of course).
+
+=== External Links ===
+
+- [Slackware configuration help extlink url_slackware_config_help]
+- [Runlevel (Wikipedia) extlink url_wikipedia_runlevel]
+-
+
+=== Revision History ===
+
+**Post built on**: %%date
+{{br}}
+**Last modified on**: %%mtime
+{{br}}
+**First published on**: 2014-01-09 
+
+|| Revision  |     Date     |                Description                |
+|     1.00   |  2014-01-16  |  Initial Revision. Published.             |
+
+%eof
+
