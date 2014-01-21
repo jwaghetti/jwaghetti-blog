@@ -1,0 +1,154 @@
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This file is part of jwaghetti blog's source.
+%
+% Copyright © 2014 Jean Waghetti
+%
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the COPYING file for more details.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%!includeconf: ../../config/config.t2t
+
+%!preproc: 'url_freedesktop_dbus' 'http://www.freedesktop.org/wiki/Software/dbus/'
+%!preproc: 'url_slackware_docs_hibernation' 'http://docs.slackware.com/howtos:slackware_admin:hibernation'
+%!preproc: 'url_wiki_lvm' 'en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)'
+
+%tags: linux, slackware, dbus, suspend, hibernate
+
+It is very straightforward to make Slackware suspend to RAM or hibernate
+to disk using [D-Bus extlink url_freedesktop_dbus].
+D-Bus is a message bus system, that allows applications communicate.
+
+On Slackware, make sure your user is on ``power`` group. Check with:
+
+"""
+{{code
+$ groups your_user
+code}}
+"""
+
+Change ``your_user`` to your user name. If it is not in ``power`` group,
+add with
+
+"""
+{{code
+# usermod -aG power your_user
+code}}
+"""
+
+== Suspending ==
+
+In order to suspend to RAM, just run the following command from a user on
+``power`` group:
+
+"""
+{{code
+$ dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend
+code}}
+"""
+
+== Hibernating ==
+
+**CAUTION**: this method does not work if you use
+[LVM extlink url_wiki_lvm].  If you do, take a look at
+[external links #external_links] at the end of the post.
+
+The command to hibernate to hard disk is similar to the hibernating command:
+
+"""
+{{code
+$ dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Hibernate
+code}}
+"""
+
+But, for the bootloader to know where to find the state saved on disk
+during hibernation, you'll need to tell it. On ``/etc/lilo.conf``, append
+the line ``append="resume=/dev/sdX"``:
+
+"""
+{{code
+image = /boot/vmlinuz
+	root = /dev/sdaY
+	initrd = /boot/initrd.gz
+	label = Slackware
+	read-only
+	append = "resume=/dev/sdaX
+code}}
+"""
+
+where ``/dev/sdaX`` is the swap partition.
+
+Run
+
+"""
+{{code
+# lilo
+code}}
+"""
+
+to apply changes.
+
+=== Just a Lil' Problem ===
+
+When you suspend or hibernate only with those commands, when
+the computer restarts, your session will be unlocked.
+
+To avoid it, call a lock or screensaver before taking those actions.
+I use ``xscreensaver`` and have the scripts ``dbus-suspend``
+``dbus-hibernate`` to lock computer:
+
+"""
+{{code
+xscreensaver-command -lock
+sleep 7
+dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Hibernate
+code}}
+"""
+
+== Rebooting and Halting ==
+
+With D-Bus, if you are in ``power`` group,
+you can reboot or halt your system too:
+
+To reboot your system:
+
+"""
+{{code
+$ dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart
+code}}
+"""
+
+And to halt:
+
+"""
+{{code
+$ dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop
+code}}
+"""
+
+=== External Links ===[external_links]
+
+- [Slackware Docs extlink url_slackware_docs_hibernation]: talks about hibernation on Slackware.
+
+-
+
+=== Revision History ===
+
+**Post built on**: %%date
+{{br}}
+**Last modified on**: %%mtime
+{{br}}
+**First published on**: 2014-01-21
+
+|| Revision  |     Date     |                Description                        |
+|     1.00   |  2014-01-09  |  Initial Version. Published.                      |
+
+%eof
+
