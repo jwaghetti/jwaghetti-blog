@@ -1,0 +1,87 @@
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This file is part of jwaghetti blog's source.
+%
+% Copyright © 2014 Jean Waghetti
+%
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the COPYING file for more details.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%!includeconf: ../../config/config.t2t
+
+%!preproc: 'url_gpsbabel' 'http://www.gpsbabel.org'
+%!preproc: 'url_josm' 'https://josm.openstreetmap.de'
+%!preproc: 'url_mytracks' 'http://code.google.com/p/mytracks/'
+%!preproc: 'url_gpx' 'http://www.topografix.com/gpx.asp'
+%!preproc: 'url_kml' 'https://developers.google.com/kml/documentation/'
+
+%tags: gps, gpx, kml, kmz, linux
+
+Recently, I have started to collect data from GPS during bicycle commutes
+using an Android smartphone. This job is done by [MyTracks url_mytracks].
+I have tried other applications, but this one worked out best.
+
+MyTracks, by default, creates a **kmz** file, which is a Keyhole
+Markup Language (**kml**) file (or various) bundled with other resources
+into a zip file. It can export to other types, but **kmz** has some
+advantages, like photographs embedded on markers.
+
+Loading this file in Google Maps directly from Google Drive was
+straightforward, but it requires an internet connection. I wanted to view,
+and maybe edit, the file offline.  I have tried loading the **kmz** file
+directly on various applications under Linux, but the
+I have only achieved getting the begin and end points this way.
+
+So, I converted the **kmz** file to **gpx** (GPS Exchange Format) using
+[gpsbabel url_gpsbabel] and the track was correctly imported (I am
+using [JOSM - Java OpenStreetMap url_josm] on the computer).
+
+== How to Convert ==
+
+Given a **kmz** file, to get a **gpx** one:
+
+"""
+{{code
+$ unzip -p myfile.kmz doc.kml | gpsbabel -i kml -f - -o gpx -F myfile.gpx
+code}}
+"""
+
+``myfile.kmz`` is the file to be converted. gpsbabel does not convert
+**kmz** directly to **gpx**, so it is necessary to extract the **kml**
+file that inside **kmz** (which is ``doc.kml`` in the example). The file
+is piped to gpsbabel which will save the new gpx file ``myfile.gpx``.
+If there is more than one **kml** file, the processes must be
+repeated for every kml.
+
+
+=== External Links ===[external_links]
+
+- [gpsbabel url_gpsbabel] (accessed 2014-02-20): project website;
+
+- [kml url_kml] (accessed 2014-02-20): Keyhole Markup Language file type;
+
+- [gpx url_gpx] (accessed 2014-02-20): GPS Exchange Format file type.
+
+-
+
+
+=== Revision History ===
+
+**Post built on**: %%date
+{{br}}
+**Last modified on**: %%mtime
+{{br}}
+**First published on**: 2014-02-21
+
+|| Revision  |     Date     |                Description                        |
+|     1.00   |  2014-02-21  |  Initial Version. Published.                      |
+
+%eof
+
