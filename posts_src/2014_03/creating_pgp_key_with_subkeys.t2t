@@ -1,0 +1,245 @@
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This file is part of jwaghetti blog's source.
+%
+% Copyright © 2014 Jean Waghetti
+%
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the COPYING file for more details.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%!includeconf: ../../config/config.t2t
+
+%!preproc: "url_openpgp_best_practices" "https://we.riseup.net/riseuplabs+paow/openpgp-best-practices"
+%!preproc: "url_subkeys_debian" "https://wiki.debian.org/Subkeys?action=show&redirect=subkeys"
+%!preproc: "url_alex_cabal" "https://alexcabal.com/creating-the-perfect-gpg-keypair/"
+%!preproc: "url_pgp_subkeys" "http://blog.dest-unreach.be/wp-content/uploads/2009/04/pgp-subkeys.html"
+
+%tags: gpg, pgp, linux
+
+The point of digitally signing and encrypting documents is not the
+goal of this post. It will be discussed why and how subkeys should
+be used.
+
+== Subkeys ==
+
+By default, when you create a new public/secret key pair
+you create, actually, two key pairs:
+
+- a master key used for signing documents and other keys and
+- a subkey for encryption.
+-
+
+After that, subkeys can be added for encryption or signing.
+
+The point on creating another subkey for signing is that
+you should keep you master key really safe, as it is the
+one that "proves" your identity. If any of your subkeys is
+compromised, you can revoke them and create a new subkey
+on the same master key, without losing all your web of trust
+as it would happen if your master key is compromised. There's
+no limit on how many subkeys can be created and how many
+subkeys that are expired or revoked on a master key.
+
+== How To ==
+
+=== Initial Setup ===
+
+Put these configurations into ``~/.gnupg/gpg.conf``
+
+"""
+{{code
+fixed-list-mode
+keyid-format 0xlong
+with-fingerprint
+personal-digest-preferences SHA512 SHA384 SHA256 SHA224
+default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 BZIP2 ZLIB ZIP Uncompressed
+cert-digest-algo SHA512
+code}}
+"""
+
+This will ensure that your key will be generated
+using stronger preferences.
+
+=== Generate Master Key ===
+
+If you do not already have a master key pair, create one:
+
+"""
+{{code
+$ gpg --gen-key
+code}}
+"""
+
+=== Generate Subkeys ===
+
+Then, use the ``--edit-key`` to add more keys:
+
+"""
+{{code
+$ gpg --edit-key mykeyid
+     ... some output and require your key password
+gpg > addkey
+code}}
+"""
+
+It will prompt which kind of key you want. It was only
+added new RSA signing subkeys with 4096 as key size and
+valid for an year in a total of two:
+one for the laptop and another for the Android phone.
+New encryption subkeys were not created for each device
+because, this way, there was not a way of decrypting
+everything everywhere (and people would not know which
+key is to be used when encrypting things for me -
+that is why more than one encryption key does not
+make much sense).
+
+=== Setting Expiration Dates ===
+
+It is reasonable setting expiration dates for the keys.
+If the password is forgotten or the key is lost other
+way, people will notice the key is no longer valid.
+
+If it was not set on subkey creation, this is
+how to set expiration date:
+
+Use ``gpg --edit-key`` command.
+
+Select the keys with ``key key_index``
+where the ``key_index`` is
+based on the list from ``edit-key`` output.
+Then use the command ``expire``.
+You will be prompted for the valid period
+of the key.  Save modifications with ``save``.
+
+For example, to modify key 1
+expiration date:
+
+"""
+{{code
+$ gpg --edit-key keyid
+...
+gpg > key 1
+...
+gpg > expire
+ ... set the date for expiration
+gpg > save
+code}}
+"""
+
+=== Export All Secret Keys ===
+
+All secret keys will be exported to ``mysecretkeys``
+file, ASCII armored, with this command:
+
+"""
+{{code
+$ gpg --armor --export-secret-keys masterkeyid > mysecretkeys
+code}}
+"""
+
+=== Exporting Only Secret Subkeys ===
+
+To export only secret subkeys:
+
+"""
+{{code
+$ gpg --armor --export-secret-subkeys masterkeyid > mysecretsubkeys
+code}}
+"""
+
+And to export only some secret subkeys:
+
+"""
+{{code
+$ gpg --armor --export-secret-subkeys subkeyid1! ... subkeyid2! > partialsecretsubkeys
+code}}
+"""
+
+The exclamation marks (!) are mandatory.
+
+=== Deleting Unwanted Subkeys ===
+
+After exporting secret keys, delete subkeys that are
+not supposed to be on the device. Use
+``gpg --edit-key`` command.
+
+Once in ``edit-key`` mode, to select a key,then  use
+``key key_index` to select the keys to be deleted.
+Once all keys that will be removed are selected,
+use the ``delkey`` command.
+
+=== Creating Revocation Certificates ===
+
+Revocation certificates are supposed to be
+used when your key is compromised, and will
+invalidate the key.
+
+To create a revocation certificate:
+
+"""
+{{code
+$ gpg --gen-revoke keyid > revocationcertificate
+code}}
+"""
+
+=== Importing Subkeys On Another Hosts ===
+
+To import a key, or only subkeys, on another
+host is as simple as:
+
+"""
+{{code
+$ gpg --import mykeys
+code}}
+"""
+
+where ``mykeys`` is the file where the keys
+were exported.
+
+=== Properly Storing Keys and Revocation Certificates ===
+
+The master key should be kept really safe. Store the
+exported keys and revocation certificates on a USB stick
+and printed on paper. Keep another copy on a safe place,
+like your parent's home.
+
+This way, if a device fail, the keys are not lost
+forever. If a key is compromised, there is a way
+to revoke it. If a key is compromised because one of the
+backups is compromised too, there is another bakcup
+to revoke the key.
+
+=== External Links ===[external_links]
+
+- url_pgp_subkeys (accessed 2014-03-11);
+
+- url_subkeys_debian (accessed 2014-03-11);
+
+- url_openpgp_best_practices (accessed 2014-03-11):
+this one have a lot of "tests" to check if the key is secure;
+
+- url_alex_cabal (accessed 2014-03-11).
+
+-
+
+
+=== Revision History ===
+
+**Post built on**: %%date
+{{br}}
+**Last modified on**: %%mtime
+{{br}}
+**First published on**: 2014-02-21
+
+|| Revision  |     Date     |                Description                        |
+|     1.00   |  2014-03-12  |  Initial Version. Published.                      |
+
+%eof
+
