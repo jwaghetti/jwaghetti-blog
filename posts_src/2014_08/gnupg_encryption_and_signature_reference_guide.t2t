@@ -1,0 +1,121 @@
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This file is part of jwaghetti blog's source.
+%
+% Copyright © 2014 Jean Waghetti
+%
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the COPYING file for more details.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%!includeconf: ../../config/config.t2t
+
+%tags: gpg, pgp
+
+This little reference guide has examples that allow
+[encryption/decryption #gpg_encryption] and
+[signature generation/verification #gpg_signatures]
+with GnuPG.
+
+== Encryption ==[gpg_encryption]
+
+- To encrypt a file:
+
+{{code
+``$ gpg --encrypt file.txt``
+code}}
+
+and the encrypted content of ``file.txt`` will
+be on output file ``file.txt.gpg``.
+
+- ASCII armored encryption:
+
+{{code
+``$ gpg --armor --encrypt file.txt``
+code}}
+
+``file.txt.asc`` will contain the ASCII armored
+encrypted ``file.txt``.
+
+- To specify a recipient:
+
+{{code
+``$ gpg --recipient rec``
+code}}
+
+- To specify the output file name:
+
+{{code
+``$ gpg --output fileout.gpg --encrypt file.txt``
+code}}
+
+Instead of the default ``file.txt.asc``, output
+to ``fileout.gpg``.
+
+- To decrypt a file:
+
+{{code
+``$ gpg --decrypt file.asc``
+code}}
+
+-
+
+== Signatures ==[gpg_signatures]
+
+- To create a detached signature:
+
+{{code
+``$ gpg --sign myfile.txt``
+code}}
+
+``file.txt.gpg`` will be created with the
+binary signature.
+
+- To create a detached signature ASCII armored:
+
+{{code
+``$ gpg --armor --sign myfile.txt``
+code}}
+
+``file.txt.gpg`` will be created with the
+ASCII armored signature.
+
+- To create an attached signature:
+
+{{code
+``$ gpg --clearsign myfile.txt``
+code}}
+
+``file.txt.gpg`` will be created with both the
+message and the signature.
+
+- To verify a signature:
+
+{{code
+``$ gpg --verify [sig.asc] myfile.txt``
+code}}
+
+Verifies optional parameter ``sig.asc``
+against ``myfile.txt``.
+
+-
+
+=== Revision History ===
+
+**Post built on**: %%date
+{{br}}
+**Last modified on**: %%mtime
+{{br}}
+**First published on**: 2014-08-25
+
+|| Revision  |     Date     |                Description                        |
+|     1.00   |  2014-08-25  |  Initial Version. Published.                      |
+
+%eof
+
