@@ -1,0 +1,223 @@
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This file is part of jwaghetti blog's source.
+%
+% Copyright © 2015 Jean Waghetti
+%
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the COPYING file for more details.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%!includeconf: ../../config/config.t2t
+
+%tags: android, cyanogenmod
+
+%!preproc: "url_android_sdk" "http://developer.android.com/sdk/index.html"
+%!preproc: "url_clockworkmod_recovery" "http://builder.unstableapps.com/__hm__/latest/clockworkmodrecovery/falcon"
+%!preproc: "url_cyanogen_zip" "http://download.cyanogenmod.org/?device=falcon"
+%!preproc: "url_cyanogen_motog_install" "http://wiki.cyanogenmod.org/w/Install_CM_for_falcon"
+%!preproc: "url_cyanogen_motog" "http://wiki.cyanogenmod.org/w/Falcon_Info"
+%!preproc: "url_gapps_zip" "http://wiki.cyanogenmod.org/w/Google_Apps"
+%!preproc: "url_motorola_bootloader_unlock" "https://motorola-global-portal.custhelp.com/app/standalone/bootloader/unlock-your-device-a/action/auth"
+
+%!preproc: "message_warranty_void" **WARNING: this will void your warranty according to the device manufacturer.**
+
+%!postproc: "__hm__" #
+
+I have written this tutorial a long time ago, but it was never
+published. I do not even use a Moto G anymore. This tutorial
+is here now for historical reasons, but it should work on newer
+versions of CyanogenMod and maybe (with correct firmware,
+recovery etc.) with newer versions of Moto G. 
+
+I have installed CyanogenMod 11 on a Motorola Moto G XT1033
+device. I have followed the instructions of the
+[CyanogenMod page for Moto G url_cyanogen_motog].
+
+Everything was fine. But, later, I have tried to install Google Apps,
+with partial success (partial because it was installed, but the phone
+was unusable). The problem was that, after each reboot, the message
+""Unfortunately the process com.android.systemui has stopped""
+(or something like that) appeared. Then the GUI would stop, come back
+then the same message would show up again and again.
+
+The problem turned out to be on CyanogenMod, not on Google Apps
+as I suspected. I wrote this tutorial because I could install
+Google Apps and the problem did not appear until I rebooted the
+device (to write this tutorial) and the problem showed up again.
+
+So, I have installed the nightly build for CyanogenMod 12 (from
+January 27, 2014) and everything is OK (until now).
+
+message_warranty_void
+
+This guide will show the steps I took to install CyanogenMod and
+Google Apps on a Moto G. Following the "official" tutorial will
+work. I am publishing my own tutorial because I thought the
+official was missing some steps. But, when I realized the problem
+was with the CyanogenMod build, the tutorial was almost done.
+
+== Setting Up the Computer  ==
+
+[Android SDK url_android_sdk] must be installed on a computer.
+``fastboot`` and ``adb`` will be used.
+
+The system used was Slackware. The compressed tarball for
+standalone SDK tools was downloaded, uncompressed it and set the PATH
+variable of the system for the tools Android SDK.
+
+== Backing Up ==
+
+Backing up data before doing anything that is somewhat dangerous is
+always a good idea. The steps of this tutorial will wipe the data
+on the device. Backup the data!
+
+== Starting ADB Server ==
+
+ADB must have the server running in order to communicate with
+devices.
+
+```
+# adb start-server
+```
+
+Run this command everytime the server is down, otherwise ADB
+will not be able to communicate with the device.
+
+== Unlocking the Device ==
+
+In order to install a new firmware, the device must be unlocked.
+A code is sent to Motorola, then an unlock code is sent back by
+e-mail. The process is fast.
+
+=== Getting the phone code ===
+
+Enable USB debugging on the phone (on developer options). If there
+is not developer options, go to phone settings -> about phone.
+Click like ten times or more on ``Build number`` field, until
+a message shows up saying you are now a developer.
+
+Connect the phone with a USB cable and reboot the phone on bootloader:
+
+```
+$ adb reboot bootloader
+```
+
+Then to get the phone code (maybe there is no need to run the
+command as root, but it did not work as a normal user):
+
+```
+# fastboot oem get_unlock_data
+```
+
+message_warranty_void
+
+Go to [Motorola Bootloader Unlock url_motorola_bootloader_unlock].
+You must login with either a Motorola ID or with a Google+ account.
+Enter the code from the last command, agree with the terms
+of license agreement and the unlock code will be provided by e-mail.
+
+The instructions on how to unlock the phone with the provided code
+will be on the e-mail too. With the phone on bootloader:
+
+```
+$ fastboot oem unlock unlock_code
+```
+
+The device is now unlocked.
+
+== Flashing New Recovery ==
+
+Download [ClockworkMod Recovery url_clockworkmod_recovery].
+
+Connect the USB cable and enable USB debugging.
+
+Reboot the device into bootloader
+
+```
+$ adb reboot bootloader
+```
+
+Then flash the image:
+
+```
+# fastboot flash recovery your_recovery_image.img 
+```
+
+As stated on [CyanogenMod page url_cyanogen_motog_install]:
+
+"""
+Note: Some ROMs overwrite recovery at boot time so if you do not
+plan to immediately boot into recovery to install CyanogenMod,
+please be aware that this may overwrite your custom recovery with
+the stock one.
+"""
+
+== Installing CyanogenMod and Google Apps ==
+
+Download [CyanogenMod zip url_cyanogen_zip] and
+[Google Apps zip url_gapps_zip].
+
+Enable the USB debugging and:
+
+```
+$ adb reboot recovery
+```
+
+It was not possible to create a backup of the current
+system. It was giving errors.
+
+To wipe the current install, select ``wipe data/factory reset``
+on device's recovery menu.
+
+Then send the CyanogenMod zip and Google Apps zip with the
+following commands:
+
+```
+$ adb push cyanogen_img.zip /sdcard/
+$ adb push google_apps.zip /sdcard/
+```
+
+Then select ``install zip``/``choose zip from sdcard``. Install
+Cyanogen Mod and Google Apps.
+
+=== The Problem ===
+
+Rebooting the equipment was causing the problem stated at the
+begining. Formatting the ``/data`` and ``/cache`` partitions
+solved the problem. Options to format it are under
+``mounts and storage`` at the recovery main menu.
+
+=== Final Considerations ===
+
+If anything is wrong, try those steps again.
+
+If you can boot the equipment on bootloader, or the
+system hangs, the situation is not irreversible.
+
+To force device reboot, press **Vol Down** and **Power**
+for ten seconds, then release.
+
+To open the bootloader, turn off the device and power it
+up pressing **Vol Down** and **Power**.
+
+=== Revision History ===
+
+**Post built on**: %%date
+{{br}}
+**Last modified on**: %%mtime
+{{br}}
+**First published on**: 2015-09-10
+
+|| Revision  |     Date     |       Description               |
+|     1.00   |  2015-01-27  | Initial version.                |
+|     1.01   |  2015-09-10  | Minor Corrections. Published.   |
+
+%eof
+
