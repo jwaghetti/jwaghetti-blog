@@ -83,9 +83,11 @@ on the device. Backup the data!
 ADB must have the server running in order to communicate with
 devices.
 
-```
+"""
+{{code
 # adb start-server
-```
+code}}
+"""
 
 Run this command everytime the server is down, otherwise ADB
 will not be able to communicate with the device.
@@ -105,16 +107,20 @@ a message shows up saying you are now a developer.
 
 Connect the phone with a USB cable and reboot the phone on bootloader:
 
-```
+"""
+{{code
 $ adb reboot bootloader
-```
+code}}
+"""
 
 Then to get the phone code (maybe there is no need to run the
 command as root, but it did not work as a normal user):
 
-```
+"""
+{{code
 # fastboot oem get_unlock_data
-```
+code}}
+"""
 
 message_warranty_void
 
@@ -126,9 +132,11 @@ of license agreement and the unlock code will be provided by e-mail.
 The instructions on how to unlock the phone with the provided code
 will be on the e-mail too. With the phone on bootloader:
 
-```
+"""
+{{code
 $ fastboot oem unlock unlock_code
-```
+code}}
+"""
 
 The device is now unlocked.
 
@@ -140,15 +148,19 @@ Connect the USB cable and enable USB debugging.
 
 Reboot the device into bootloader
 
-```
+"""
+{{code
 $ adb reboot bootloader
-```
+code}}
+"""
 
 Then flash the image:
 
-```
+"""
+{{code
 # fastboot flash recovery your_recovery_image.img 
-```
+code}}
+"""
 
 As stated on [CyanogenMod page url_cyanogen_motog_install]:
 
@@ -166,9 +178,11 @@ Download [CyanogenMod zip url_cyanogen_zip] and
 
 Enable the USB debugging and:
 
-```
+"""
+{{code
 $ adb reboot recovery
-```
+code}}
+"""
 
 It was not possible to create a backup of the current
 system. It was giving errors.
@@ -179,10 +193,12 @@ on device's recovery menu.
 Then send the CyanogenMod zip and Google Apps zip with the
 following commands:
 
-```
+"""
+{{code
 $ adb push cyanogen_img.zip /sdcard/
 $ adb push google_apps.zip /sdcard/
-```
+code}}
+"""
 
 Then select ``install zip``/``choose zip from sdcard``. Install
 Cyanogen Mod and Google Apps.
@@ -218,6 +234,7 @@ up pressing **Vol Down** and **Power**.
 || Revision  |     Date     |       Description               |
 |     1.00   |  2015-01-27  | Initial version.                |
 |     1.01   |  2015-09-10  | Minor Corrections. Published.   |
+|     1.02   |  2015-09-10  | Adding correct code tags.       |
 
 %eof
 
