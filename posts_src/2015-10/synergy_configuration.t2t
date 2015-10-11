@@ -1,0 +1,86 @@
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This file is part of jwaghetti blog's source.
+%
+% Copyright © 2015 Jean Waghetti
+%
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the COPYING file for more details.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%!includeconf: ../../config/config.t2t
+
+%tags: synergy, x, linux
+
+Synergy is a program that allows two hosts
+to share the keyboard and mouse of the
+"server host" in ``X11``.
+
+== Configuration ==
+
+The following is an example config file, where server is
+called ``serverhost`` and the client is called ``clienthost``.
+The ``serverhost`` screen will be on left  of ``clienthost``.
+Screensaver is synchronized on both screens.
+
+"""
+{{code
+section: options
+    screenSaverSync = true
+end
+section: screens
+    serverhost:
+    clienthost:
+end
+section: links
+    clienthost:
+        left = serverhost
+    serverhost:
+        right = clienthost
+end
+code}}
+"""
+
+= Sharing keyboard and mouse =
+
+The server side must be initiated with
+
+"""
+{{code
+$ synergys -c config_file
+code}}
+"""
+
+Then, on client, you must run the ``synergyc``
+specifying the server host
+
+"""
+{{code
+$ synergyc serverhost
+code}}
+"""
+
+== Firewall ==
+
+The default port of Synergy is 24800. This port
+needs to be open on server host firewall.
+
+=== Revision History ===
+
+**Post built on**: %%date
+{{br}}
+**Last modified on**: %%mtime
+{{br}}
+**First published on**: 2015-09-10
+
+|| Revision  |     Date     |       Description               |
+|     1.00   |  2015-10-11  | Initial version. Published      |
+
+%eof
+
