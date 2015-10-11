@@ -1,0 +1,133 @@
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This file is part of jwaghetti blog's source.
+%
+% Copyright © 2015 Jean Waghetti
+%
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the COPYING file for more details.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%!includeconf: ../../config/config.t2t
+
+%tags: stunnel, linux
+
+Various programs have a ``http`` interface, for examp-le,
+``transmission-dameon`` (a BitTorrent program). These interfaces
+can be served outside th LAN, but the downside that they have
+no secure (i.e. encrypted) connection.
+
+Adding SSL to it makes the connection encrypted. ``stunel``
+is an daemon that tunnels connection with SSL encryption.
+
+== Dependecies ==
+
+Two programs are needed to achieve this. The first is
+[``stunell`` #stunnel] and the second is
+[``openssl`` #openssl].
+
+== openssl ==[openssl]
+
+This program creates SSL certificates.
+
+To generate a certificate, run:
+
+"""
+{{code
+$ openssl req -new -out stunnel_cert.pem -keyout stunnel.pem -nodes -x509 -days 365
+code}}
+"""
+
+This will create a certificate on file ``stunnel_cert.pem`` and a new private key
+``stunnel.pem``. To generate a certificate from an existing key ``old_key.pem``:
+
+"""
+{{code
+$ openssl req -new -out stunnel_cert.pem -key old_key.pem -nodes -x509 -days 365
+code}}
+"""
+
+== stunnel ==[stunnel]
+
+The following configuration is an example:
+
+"""
+{{code
+client = no
+
+[name_of_config]
+cert = stunnel_cert.pem
+accept = host_1:80
+connect = host_2:81
+code}}
+"""
+
+The first line tells that this configurations is for a server.
+
+The between []'s is the name of the forwarding configuration.
+Multiple configurations may reside here.
+
+Then, it is specified the path to the certificate file (generated
+with ``openssl``). In this case, configuration file and certificate
+file are in the same directory.
+
+``accept`` field is where stunnel will listen for connections. Is
+the "secure" connection port outside users will see. You can
+specify ``host_1``, to tell ``stunnel`` to accept only connections
+for this host.
+ 
+``connect`` is where ``stunnel`` will forward the connection for
+the port specified in ``accept`` field. It can be the localhost
+or other host.
+
+== Running stunnel ==
+
+To run ``stunnel``, just type:
+
+"""
+{{code
+$ stunnel config_file
+code}}
+"""
+
+Root privileges are needed for some ports (lower range).
+
+You should the that line to ``local.rc`` for ``stunnel`` run on startup.
+
+"""
+{{code
+section: options
+    screenSaverSync = true
+end
+section: screens
+    serverhost:
+    clienthost:
+end
+section: links
+    clienthost:
+        left = serverhost
+    serverhost:
+        right = clienthost
+end
+code}}
+"""
+
+=== Revision History ===
+
+**Post built on**: %%date
+{{br}}
+**Last modified on**: %%mtime
+{{br}}
+**First published on**: 2015-09-10
+
+|| Revision  |     Date     |       Description               |
+|     1.00   |  2015-10-11  | Initial version. Published      |
+
+%eof
+
