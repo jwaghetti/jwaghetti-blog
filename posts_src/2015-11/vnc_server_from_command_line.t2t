@@ -1,0 +1,84 @@
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This file is part of jwaghetti blog's source.
+%
+% Copyright © 2015 Jean Waghetti
+%
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the COPYING file for more details.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%!includeconf: ../../config/config.t2t
+
+%tags: vnc, x, linux
+
+VNC is a graphical desktop sharing system that allows remotely
+controlling the computer.
+
+This tutorial covers how to share what is displayed directly on
+the monitor, or X's ``DISPLAY:0`` and how to share a new ``DISPLAY``
+created for VNC.
+
+== Installation ==
+
+To install VNC, install the following packeges
+
+- ``vncserver`` or ``tigervnc-server``
+- ``x11vnc``
+-
+
+== Configuring password ==
+
+It is necessary to create a password for VNC, or
+it will allow anyone to connect. Type
+
+``$ vncpassword``
+
+and you will be prompted for a new password,
+that will be stored in ``${HOME}/.vnc/passwd``. Passwords
+have maximum length of 8 characters
+
+== Running VNC server ==
+
+=== DISPLAY:0 ===
+
+``x11vnc`` can run a VNC session for ``DISPLAY`` :0 (the
+one you see in the monitor. For doing it, and prompting
+for password, execute the following:
+
+=== Other DISPLAY ===
+
+``vncserver`` will create a VNC session on a ``DISPLAY``
+different to :0, and will require password automaticaly.
+Multiple instances of vncserver can run simultaneously,
+each in a different ``DISPLAY``.
+
+
+=== Stopping VNC server ===
+
+``# x11vnc -rfbauth ${HOME}/.vnc/passwd -display :0``
+
+``x11vnc`` will close the server when you close the
+VNC client. For ``vncserver``, you'll need to:
+
+``$ vncserver -kill DISPLAY_NO``
+
+=== Revision History ===
+
+**Post built on**: %%date
+{{br}}
+**Last modified on**: %%mtime
+{{br}}
+**First published on**: 2015-11-02
+
+|| Revision  |     Date     |       Description               |
+|     1.00   |  2015-11-02  | Initial version. Published      |
+
+%eof
+
