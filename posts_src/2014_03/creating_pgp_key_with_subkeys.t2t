@@ -53,7 +53,6 @@ subkeys that are expired or revoked on a master key.
 
 Put these configurations into ``~/.gnupg/gpg.conf``
 
-"""
 {{code
 fixed-list-mode
 keyid-format 0xlong
@@ -62,7 +61,6 @@ personal-digest-preferences SHA512 SHA384 SHA256 SHA224
 default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 BZIP2 ZLIB ZIP Uncompressed
 cert-digest-algo SHA512
 code}}
-"""
 
 This will ensure that your key will be generated
 using stronger preferences.
@@ -71,23 +69,19 @@ using stronger preferences.
 
 If you do not already have a master key pair, create one:
 
-"""
 {{code
 $ gpg --gen-key
 code}}
-"""
 
 === Generate Subkeys ===
 
 Then, use the ``--edit-key`` to add more keys:
 
-"""
 {{code
 $ gpg --edit-key mykeyid
      ... some output and require your key password
 gpg > addkey
 code}}
-"""
 
 It will prompt which kind of key you want. It was only
 added new RSA signing subkeys with 4096 as key size and
@@ -121,7 +115,6 @@ of the key.  Save modifications with ``save``.
 For example, to modify key 1
 expiration date:
 
-"""
 {{code
 $ gpg --edit-key keyid
 ...
@@ -131,36 +124,29 @@ gpg > expire
  ... set the date for expiration
 gpg > save
 code}}
-"""
 
 === Export All Secret Keys ===
 
 All secret keys will be exported to ``mysecretkeys``
 file, ASCII armored, with this command:
 
-"""
 {{code
 $ gpg --armor --export-secret-keys masterkeyid > mysecretkeys
 code}}
-"""
 
 === Exporting Only Secret Subkeys ===
 
 To export only secret subkeys:
 
-"""
 {{code
 $ gpg --armor --export-secret-subkeys masterkeyid > mysecretsubkeys
 code}}
-"""
 
 And to export only some secret subkeys:
 
-"""
 {{code
 $ gpg --armor --export-secret-subkeys subkeyid1! ... subkeyid2! > partialsecretsubkeys
 code}}
-"""
 
 The exclamation marks (!) are mandatory.
 
@@ -183,22 +169,18 @@ invalidate the key.
 
 To create a revocation certificate:
 
-"""
 {{code
 $ gpg --gen-revoke keyid > revocationcertificate
 code}}
-"""
 
 === Importing Subkeys On Another Hosts ===
 
 To import a key, or only subkeys, on another
 host is as simple as:
 
-"""
 {{code
 $ gpg --import mykeys
 code}}
-"""
 
 where ``mykeys`` is the file where the keys
 were exported.
@@ -233,9 +215,7 @@ this one have a lot of "tests" to check if the key is secure;
 === Revision History ===
 
 **Post built on**: %%date
-{{br}}
 **Last modified on**: %%mtime
-{{br}}
 **First published on**: 2014-02-21
 
 || Revision  |     Date     |                Description                        |

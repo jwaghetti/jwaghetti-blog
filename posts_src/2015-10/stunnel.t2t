@@ -38,26 +38,21 @@ This program creates SSL certificates.
 
 To generate a certificate, run:
 
-"""
 {{code
 $ openssl req -new -out stunnel_cert.pem -keyout stunnel.pem -nodes -x509 -days 365
 code}}
-"""
 
 This will create a certificate on file ``stunnel_cert.pem`` and a new private key
 ``stunnel.pem``. To generate a certificate from an existing key ``old_key.pem``:
 
-"""
 {{code
 $ openssl req -new -out stunnel_cert.pem -key old_key.pem -nodes -x509 -days 365
 code}}
-"""
 
 == stunnel ==[stunnel]
 
 The following configuration is an example:
 
-"""
 {{code
 client = no
 
@@ -66,7 +61,6 @@ cert = stunnel_cert.pem
 accept = host_1:80
 connect = host_2:81
 code}}
-"""
 
 The first line tells that this configurations is for a server.
 
@@ -90,17 +84,14 @@ or other host.
 
 To run ``stunnel``, just type:
 
-"""
 {{code
 $ stunnel config_file
 code}}
-"""
 
 Root privileges are needed for some ports (lower range).
 
 You should the that line to ``local.rc`` for ``stunnel`` run on startup.
 
-"""
 {{code
 section: options
     screenSaverSync = true
@@ -116,14 +107,11 @@ section: links
         right = clienthost
 end
 code}}
-"""
 
 === Revision History ===
 
 **Post built on**: %%date
-{{br}}
 **Last modified on**: %%mtime
-{{br}}
 **First published on**: 2015-10-11
 
 || Revision  |     Date     |       Description               |

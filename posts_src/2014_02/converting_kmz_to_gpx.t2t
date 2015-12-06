@@ -47,11 +47,9 @@ using [JOSM - Java OpenStreetMap url_josm] on the computer).
 
 Given a **kmz** file, to get a **gpx** one:
 
-"""
 {{code
 $ unzip -p myfile.kmz doc.kml | gpsbabel -i kml -f - -o gpx -F myfile.gpx
 code}}
-"""
 
 ``myfile.kmz`` is the file to be converted. gpsbabel does not convert
 **kmz** directly to **gpx**, so it is necessary to extract the **kml**
@@ -75,9 +73,7 @@ repeated for every kml.
 === Revision History ===
 
 **Post built on**: %%date
-{{br}}
 **Last modified on**: %%mtime
-{{br}}
 **First published on**: 2014-02-21
 
 || Revision  |     Date     |                Description                        |

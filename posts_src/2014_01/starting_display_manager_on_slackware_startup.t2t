@@ -48,23 +48,19 @@ On Slackware, there are 7 runlevels:
 To modify the default runlevel of Slackware, in the file
 ``/etc/inittab``, look for a line like this:
 
-"""
 {{code
 # Default runlevel. (Do not set to 0 or 6)
 id:3:initdefault:
 code}}
-"""
 
 As it was expected (on Slackware), the default runlevel is 3
 (multiuser mode). Change it to runlevel 4 for GUI login
 when the system is started:
 
-"""
 {{code
 # Default runlevel. (Do not set to 0 or 6)
 id:4:initdefault:
 code}}
-"""
 
 Save the file and that is it. Reboot your system and a
 graphical login prompt will be there (if you installed
@@ -79,9 +75,7 @@ the packages for one, of course).
 === Revision History ===
 
 **Post built on**: %%date
-{{br}}
 **Last modified on**: %%mtime
-{{br}}
 **First published on**: 2014-01-09 
 
 || Revision  |     Date     |                Description                |

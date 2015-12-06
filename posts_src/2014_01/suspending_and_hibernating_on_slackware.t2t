@@ -28,31 +28,25 @@ D-Bus is a message bus system, that allows applications communicate.
 
 On Slackware, make sure your user is on ``power`` group. Check with:
 
-"""
 {{code
 $ groups your_user
 code}}
-"""
 
 Change ``your_user`` to your user name. If it is not in ``power`` group,
 add with
 
-"""
 {{code
 # usermod -aG power your_user
 code}}
-"""
 
 == Suspending ==
 
 In order to suspend to RAM, just run the following command from a user on
 ``power`` group:
 
-"""
 {{code
 $ dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend
 code}}
-"""
 
 == Hibernating ==
 
@@ -62,17 +56,14 @@ code}}
 
 The command to hibernate to hard disk is similar to the hibernating command:
 
-"""
 {{code
 $ dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Hibernate
 code}}
-"""
 
 But, for the bootloader to know where to find the state saved on disk
 during hibernation, you'll need to tell it. On ``/etc/lilo.conf``, append
 the line ``append="resume=/dev/sdX"``:
 
-"""
 {{code
 image = /boot/vmlinuz
 	root = /dev/sdaY
@@ -81,17 +72,14 @@ image = /boot/vmlinuz
 	read-only
 	append = "resume=/dev/sdaX
 code}}
-"""
 
 where ``/dev/sdaX`` is the swap partition.
 
 Run
 
-"""
 {{code
 # lilo
 code}}
-"""
 
 to apply changes.
 
@@ -104,13 +92,11 @@ To avoid it, call a lock or screensaver before taking those actions.
 I use ``xscreensaver`` and have the scripts ``dbus-suspend``
 ``dbus-hibernate`` to lock computer:
 
-"""
 {{code
 xscreensaver-command -lock
 sleep 7
 dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Hibernate
 code}}
-"""
 
 == Rebooting and Halting ==
 
@@ -119,19 +105,15 @@ you can reboot or halt your system too:
 
 To reboot your system:
 
-"""
 {{code
 $ dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart
 code}}
-"""
 
 And to halt:
 
-"""
 {{code
 $ dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop
 code}}
-"""
 
 === External Links ===[external_links]
 
@@ -142,9 +124,7 @@ code}}
 === Revision History ===
 
 **Post built on**: %%date
-{{br}}
 **Last modified on**: %%mtime
-{{br}}
 **First published on**: 2014-01-21
 
 || Revision  |     Date     |                Description                        |

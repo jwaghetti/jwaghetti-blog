@@ -109,9 +109,7 @@ against ``myfile.txt``.
 === Revision History ===
 
 **Post built on**: %%date
-{{br}}
 **Last modified on**: %%mtime
-{{br}}
 **First published on**: 2014-08-25
 
 || Revision  |     Date     |                Description                        |

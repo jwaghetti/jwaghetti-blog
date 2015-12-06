@@ -27,36 +27,29 @@ This tutorial is based on Slackware 14.1.
 
 Slackware waits for a DHCP response on boot. Look for the following lines
 
-"""
 {{code
 echo "/etc/rc.d/rc.inet1:  /sbin/dhcpcd -t ${DHCP_TIMEOUT[$i]:-10} ${DHCP_OPTIONS} ${1}" | $LOGGER
 /sbin/dhcpcd -t {$DHCP_TIMEOUT[$i]: -10 ${DHCP_OPTIONS} ${1}
 code}}
-"""
 
 and just add a ``&`` on the end of the last line:
 
-"""
 {{code
 echo "/etc/rc.d/rc.inet1:  /sbin/dhcpcd -t ${DHCP_TIMEOUT[$i]:-10} ${DHCP_OPTIONS} ${1}" | $LOGGER
 /sbin/dhcpcd -t {$DHCP_TIMEOUT[$i]: -10 ${DHCP_OPTIONS} ${1} &
 code}}
-"""
 
 == bzImage Loading ==
 
 If the message:
 
-"""
 {{code
 Loading Linux ..........
 code}}
-"""
 
 takes too long, the solution can be adding the ``compact``
 parameter on ``/etc/lilo.conf``:
 
-"""
 {{code
 # Start LILO global section
 # Append any additional kernel parameters:
@@ -64,7 +57,6 @@ append="vt.default_utf8=1 resume=/dev/sda7
 boot = /dev/sda
 compact
 code}}
-"""
 
 Maybe there's already this parameter commented out, with
 another comment saying it will be faster, but won't work
@@ -73,11 +65,9 @@ on all systems.
 Don't forget to run the ``lilo`` command to modifications
 take place:
 
-"""
 {{code
 # lilo
 code}}
-"""
 
 === External Links ===
 
@@ -88,9 +78,7 @@ code}}
 === Revision History ===
 
 **Post built on**: %%date
-{{br}}
 **Last modified on**: %%mtime
-{{br}}
 **First published on**: 2014-01-14
 
 || Revision  |     Date     |                Description              |

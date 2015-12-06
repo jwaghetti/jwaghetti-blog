@@ -38,7 +38,9 @@ To install VNC, install the following packeges
 It is necessary to create a password for VNC, or
 it will allow anyone to connect. Type
 
-``$ vncpassword``
+{{code
+$ vncpassword
+code}}
 
 and you will be prompted for a new password,
 that will be stored in ``${HOME}/.vnc/passwd``. Passwords
@@ -62,19 +64,21 @@ each in a different ``DISPLAY``.
 
 === Stopping VNC server ===
 
-``# x11vnc -rfbauth ${HOME}/.vnc/passwd -display :0``
+{{code
+# x11vnc -rfbauth ${HOME}/.vnc/passwd -display :0
+code}}
 
 ``x11vnc`` will close the server when you close the
 VNC client. For ``vncserver``, you'll need to:
 
-``$ vncserver -kill DISPLAY_NO``
+{{code
+$ vncserver -kill DISPLAY_NO
+code}}
 
 === Revision History ===
 
 **Post built on**: %%date
-{{br}}
 **Last modified on**: %%mtime
-{{br}}
 **First published on**: 2015-11-02
 
 || Revision  |     Date     |       Description               |

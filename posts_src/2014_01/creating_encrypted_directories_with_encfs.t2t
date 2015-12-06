@@ -56,11 +56,9 @@ directory to mount the encrypted directory. For the example, let's call
 the directories `encrypted` and `decrypted`, respectively. Both on the
 home directory.
 
-"""
 {{code
 $ encfs ~/encrypted ~/decrypted
 code}}
-"""
 
 Notice that full paths are necessary. You will be prompted if you want
 the preconfigured options or to configure it yourself. I choose the
@@ -68,19 +66,15 @@ defaults. At the end, you will be prompted for a password and confirmation.
 
 To mount the encrypted folder again, the command is the same:
 
-"""
 {{code
 $ encfs /full/path/to/encrypted_folder /full/path/to/decrypted_folder
 code}}
-"""
 
 And to umount it:
 
-"""
 {{code
 $ fusermount -u /full/path/to/decrypted_folder
 code}}
-"""
 
 === External Links ===
 
@@ -94,9 +88,7 @@ for GUI user interaction.
 === Revision History ===
 
 **Post built on**: %%date
-{{br}}
 **Last modified on**: %%mtime
-{{br}}
 **First published on**: 2014-01-09 
 
 || Revision  |     Date     |                Description                        |

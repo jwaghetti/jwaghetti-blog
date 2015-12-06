@@ -28,12 +28,10 @@ The system used to create this tutorial is Ubuntu Studio
 
 Check the current alternatives for ``sh`` with the command:
 
-"""
 {{code
 # update-alternatives --config sh
 update-alternatives: error: no alternatives for sh
 code}}
-"""
 
 The message showed that there were no alternatives for sh.
 It ``bash`` is already installed as an alternative, jump to
@@ -43,12 +41,10 @@ It ``bash`` is already installed as an alternative, jump to
 
 To install ``bash`` as an alternative for ``sh``:
 
-"""
 {{code
 # update-alternatives --install /bin/sh sh /bin/bash 100
 update-alternatives: using /bin/bash to provide /bin/sh (sh) in auto mode
 code}}
-"""
 
 Where ``/bin/sh`` is the symbolic name of the alternative,
 ``sh`` is the alternative name, ``/bin/bash`` is the path
@@ -58,12 +54,10 @@ As there were no alternatives for ``sh`` before, just
 installing bash will make it the default alternative.
 Just to illustrate the example, to install ``dash``:
 
-"""
 {{code
 sudo update-alternatives --install /bin/sh sh /bin/dash 50
 update-alternatives: using /bin/dash to provide /bin/sh (sh) in auto mode
 code}}
-"""
 
 Now, both ``bash`` and ``dash`` are installed as an alternative
 for sh. ``bash`` is the selected on auto mode, because it has
@@ -74,7 +68,6 @@ higher priority.
 To manually configure an alternative, use the
 ``--config`` paramater for ``update-alternatives``:
 
-"""
 {{code
 update-alternatives --config sh
 There are 2 choices for the alternative sh (providing /bin/sh).
@@ -87,7 +80,6 @@ There are 2 choices for the alternative sh (providing /bin/sh).
 
 Press enter to keep the current choice[*], or type selection number:
 code}}
-"""
 
 And to change the priority of an alternative, just use
 the ``install`` parameter as described above.
@@ -95,9 +87,7 @@ the ``install`` parameter as described above.
 === Revision History ===
 
 **Post built on**: %%date
-{{br}}
 **Last modified on**: %%mtime
-{{br}}
 **First published on**: 2015-09-10
 
 || Revision  |     Date     |       Description               |

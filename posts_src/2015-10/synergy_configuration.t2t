@@ -29,7 +29,6 @@ called ``serverhost`` and the client is called ``clienthost``.
 The ``serverhost`` screen will be on left  of ``clienthost``.
 Screensaver is synchronized on both screens.
 
-"""
 {{code
 section: options
     screenSaverSync = true
@@ -45,26 +44,21 @@ section: links
         right = clienthost
 end
 code}}
-"""
 
 = Sharing keyboard and mouse =
 
 The server side must be initiated with
 
-"""
 {{code
 $ synergys -c config_file
 code}}
-"""
 
 Then, on client, you must run the ``synergyc``
 specifying the server host
 
-"""
 {{code
 $ synergyc serverhost
 code}}
-"""
 
 == Firewall ==
 
@@ -74,9 +68,7 @@ needs to be open on server host firewall.
 === Revision History ===
 
 **Post built on**: %%date
-{{br}}
 **Last modified on**: %%mtime
-{{br}}
 **First published on**: 2015-10-11
 
 || Revision  |     Date     |       Description               |
