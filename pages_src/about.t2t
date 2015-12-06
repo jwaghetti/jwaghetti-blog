@@ -6,7 +6,7 @@
 %
 % This file is part of jwaghetti blog's source.
 %
-% Copyright © 2014 Jean Waghetti
+% Copyright © 2014-2015 Jean Waghetti
 %
 % This work is free. You can redistribute it and/or modify it under the
 % terms of the Do What The Fuck You Want To Public License, Version 2,
@@ -17,7 +17,7 @@
 %!includeconf: ../config/config.t2t
 
 This blog is a way of sharing knowledge. May not be anything interesting
-or new. It is only a way to concentrate 'how to do's of things I did,
+or new. It is only a way to concentrate how tos of things I did,
 for future reference.
 
 = License =
@@ -33,15 +33,13 @@ misinterpretation or catastrophic consequence.
 
 For all the content, otherwise noted:
 
-Copyright © 2014 Jean Waghetti.
+Copyright © 2014-2015 Jean Waghetti.
 
 = Tools I Use For Blogging =
 
 Some tools help me to put this blog up.
 
-The first is [Blogger extlink url_blogger].
-
-It hosts the blog, it is where I manage the posts, blog model etc.
+The first is [WordPress extlink url_wordpress].
 
 A tool that I always use is [Vim extlink url_vim]:
 the best text editor I have ever used. Besides Blogger having its
