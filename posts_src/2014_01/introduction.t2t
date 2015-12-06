@@ -6,7 +6,7 @@
 %
 % This file is part of jwaghetti blog's source.
 %
-% Copyright © 2014 Jean Waghetti
+% Copyright © 2014-2015 Jean Waghetti
 %
 % This work is free. You can redistribute it and/or modify it under the
 % terms of the Do What The Fuck You Want To Public License, Version 2,
@@ -17,8 +17,7 @@
 %!includeconf: ../../config/config.t2t
 
 I'm Jean Waghetti and this is my personal blog. It will contain
-information of any kind related to things I do, from
-computer systems configuration to bicycle maintenance.
+information of I do, mainly related to computers and technology.
 
 This is a way of sharing knowledge in a convenient way: I have
 information I may need in future concentrated here.
@@ -28,13 +27,12 @@ Enjoy!
 === Revision History ===
 
 **Post built on**: %%date
-{{br}}
 **Last modified on**: %%mtime
-{{br}}
 **First published on**: 2014-01-09 
 
 || Revision  |     Date     |                Description                        |
 |     1.00   |  2014-01-09  |  Initial revision. Published.            |
+|     2.00   |  2015-12-06  |  Changing the scope of the blog.         |
 
 %eof
 
